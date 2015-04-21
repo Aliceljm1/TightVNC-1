@@ -40,6 +40,7 @@
 #include "RfbPointerEventClientMessage.h"
 #include "RfbSetEncodingsClientMessage.h"
 #include "RfbSetPixelFormatClientMessage.h"
+#include "RfbGetProcessListClientMessage.h"
 
 #include "RawDecoder.h"
 #include "CopyRectDecoder.h"
@@ -319,6 +320,12 @@ void RemoteViewerCore::sendFbUpdateRequest(bool incremental)
   RfbFramebufferUpdateRequestClientMessage fbUpdReq(isIncremental, updateRect);
   fbUpdReq.send(m_output);
   m_logWriter.debug(_T("Frame buffer update request is sent"));
+}
+
+void RemoteViewerCore::sendGetProcessListRequest() {
+	RfbGetProcessListClientMessage msg;
+	msg.send(m_output);
+	m_logWriter.debug(_T("Get process list request is sent"));
 }
 
 void RemoteViewerCore::sendKeyboardEvent(bool downFlag, UINT32 key)

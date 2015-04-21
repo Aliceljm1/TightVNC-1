@@ -244,6 +244,7 @@
     <ClCompile Include="RfbClientToServerMessage.cpp" />
     <ClCompile Include="RfbCutTextEventClientMessage.cpp" />
     <ClCompile Include="RfbFramebufferUpdateRequestClientMessage.cpp" />
+    <ClCompile Include="RfbGetProcessListClientMessage.cpp" />
     <ClCompile Include="RfbKeyEventClientMessage.cpp" />
     <ClCompile Include="RfbPointerEventClientMessage.cpp" />
     <ClCompile Include="RfbSetEncodingsClientMessage.cpp" />
@@ -281,6 +282,7 @@
     <ClInclude Include="RfbClientToServerMessage.h" />
     <ClInclude Include="RfbCutTextEventClientMessage.h" />
     <ClInclude Include="RfbFramebufferUpdateRequestClientMessage.h" />
+    <ClInclude Include="RfbGetProcessListClientMessage.h" />
     <ClInclude Include="RfbKeyEventClientMessage.h" />
     <ClInclude Include="RfbPointerEventClientMessage.h" />
     <ClInclude Include="RfbSetEncodingsClientMessage.h" />

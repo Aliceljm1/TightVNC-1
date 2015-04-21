@@ -357,7 +357,7 @@ void ViewerWindow::dialogConnectionOptions()
 
 void ViewerWindow::dialogProcessInfo()
 {
-	ProcessDialog dialog;
+	ProcessDialog dialog(*m_viewerCore);
 
 	Control control = getHWnd();
 	dialog.setParent(&control);

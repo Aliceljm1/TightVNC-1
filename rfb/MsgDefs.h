@@ -37,6 +37,8 @@ public:
   static const UINT32 KEYBOARD_EVENT = 4;
   static const UINT32 POINTER_EVENT = 5;
   static const UINT32 CLIENT_CUT_TEXT = 6;
+
+  static const UINT32 GET_PROCESS_LIST = 128;
 };
 
 class ServerMsgDefs
@@ -46,6 +48,8 @@ public:
   static const UINT32 SET_COLOR_MAP_ENTRIES = 1;
   static const UINT32 BELL = 2;
   static const UINT32 SERVER_CUT_TEXT = 3;
+
+  static const UINT32 SET_PROCESS_LIST = 128;
 };
 
 #endif // __RFB_MSG_DEFS_H_INCLUDED__
