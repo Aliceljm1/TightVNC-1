@@ -29,6 +29,7 @@
 #include "DesktopWindow.h"
 #include "FileTransferMainDialog.h"
 #include "NamingDefs.h"
+#include "ProcessDialog.h"
 #include "OptionsDialog.h"
 #include "ScaleManager.h"
 #include "ViewerMenu.h"
@@ -190,6 +191,7 @@ private:
   bool viewerCoreSettings();
   void dialogConnectionOptions();
   void dialogConnectionInfo();
+  void dialogProcessInfo();
   void switchFullScreenMode();
   void dialogConfiguration();
   void adjustWindowSize();

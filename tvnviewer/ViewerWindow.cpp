@@ -114,11 +114,11 @@ bool ViewerWindow::onCreate(LPCREATESTRUCT lps)
   loadIcon(IDI_APPICON);
   m_toolbar.loadToolBarfromRes(IDB_TOOLBAR);
   m_toolbar.setButtonsRange(IDS_TB_NEWCONNECTION);
-  m_toolbar.setViewAutoButtons(4, ToolBar::TB_Style_sep);
-  m_toolbar.setViewAutoButtons(6, ToolBar::TB_Style_sep);
-  m_toolbar.setViewAutoButtons(10, ToolBar::TB_Style_sep);
+  m_toolbar.setViewAutoButtons(5, ToolBar::TB_Style_sep);
+  m_toolbar.setViewAutoButtons(7, ToolBar::TB_Style_sep);
   m_toolbar.setViewAutoButtons(11, ToolBar::TB_Style_sep);
-  m_toolbar.setViewAutoButtons(15, ToolBar::TB_Style_sep);
+  m_toolbar.setViewAutoButtons(12, ToolBar::TB_Style_sep);
+  m_toolbar.setViewAutoButtons(16, ToolBar::TB_Style_sep);
   m_toolbar.attachToolBar(getHWnd());
   m_menu.getSystemMenu(getHWnd());
   m_menu.loadMenu();
@@ -353,6 +353,18 @@ void ViewerWindow::dialogConnectionOptions()
     m_conConf->saveToStorage(&m_ccsm);
     applySettings();
   }
+}
+
+void ViewerWindow::dialogProcessInfo()
+{
+	ProcessDialog dialog;
+
+	Control control = getHWnd();
+	dialog.setParent(&control);
+
+	if (dialog.showModal() == IDOK) {
+		applySettings();
+	}
 }
 
 void ViewerWindow::dialogConnectionInfo() 
@@ -693,6 +705,9 @@ bool ViewerWindow::onCommand(WPARAM wParam, LPARAM lParam)
       return true;
     case IDS_TB_CONNINFO:
       dialogConnectionInfo();
+      return true;
+	case IDS_TB_PROCESSINFO:
+	  dialogProcessInfo();
       return true;
     case IDS_TB_PAUSE:
       commandPause();

@@ -99,6 +99,9 @@
     <ClCompile Include="ViewerVncAuthHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ProcessDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AuthenticationDialog.h">
@@ -188,6 +191,9 @@
     <ClInclude Include="ViewerVncAuthHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ProcessDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\appicon.ico">
@@ -219,5 +225,13 @@
     <ResourceCompile Include="tvnviewer.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\tightvnc.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\tightvnc48.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

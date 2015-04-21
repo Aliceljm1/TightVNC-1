@@ -312,6 +312,7 @@
     <ClCompile Include="NamingDefs.cpp" />
     <ClCompile Include="NewFolderDialog.cpp" />
     <ClCompile Include="OptionsDialog.cpp" />
+    <ClCompile Include="ProcessDialog.cpp" />
     <ClCompile Include="ResourceStrings.cpp" />
     <ClCompile Include="ScaleManager.cpp" />
     <ClCompile Include="TvnViewer.cpp" />
@@ -342,6 +343,7 @@
     <ClInclude Include="NamingDefs.h" />
     <ClInclude Include="NewFolderDialog.h" />
     <ClInclude Include="OptionsDialog.h" />
+    <ClInclude Include="ProcessDialog.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ResourceStrings.h" />
     <ClInclude Include="ScaleManager.h" />
@@ -415,6 +417,10 @@
     <ProjectReference Include="..\zlib\zlib.vcxproj">
       <Project>{f9597c92-5d25-4a3c-bad6-8a2566fddd6f}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\tightvnc.bmp" />
+    <Image Include="res\tightvnc48.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
