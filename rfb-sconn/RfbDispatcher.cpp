@@ -25,64 +25,75 @@
 #include "RfbDispatcher.h"
 
 RfbDispatcher::RfbDispatcher(RfbInputGate *gate,
-                             AnEventListener *extTerminationListener)
-: m_gate(gate),
-  m_extTerminationListener(extTerminationListener),
-  m_terminationEvent(0)
+	AnEventListener *extTerminationListener)
+	: m_gate(gate),
+	m_extTerminationListener(extTerminationListener),
+	m_terminationEvent(0)
 {
 }
 
 RfbDispatcher::RfbDispatcher(RfbInputGate *gate,
-                             WindowsEvent *terminationEvent)
-: m_gate(gate),
-  m_extTerminationListener(0),
-  m_terminationEvent(terminationEvent)
+	WindowsEvent *terminationEvent)
+	: m_gate(gate),
+	m_extTerminationListener(0),
+	m_terminationEvent(terminationEvent)
 {
 }
 
 RfbDispatcher::~RfbDispatcher()
 {
-  terminate();
-  resume();
-  wait();
+	terminate();
+	resume();
+	wait();
 }
 
 void RfbDispatcher::notifyAbTermination()
 {
-  if (m_extTerminationListener) {
-    m_extTerminationListener->onAnObjectEvent();
-  }
-  if (m_terminationEvent) {
-    m_terminationEvent->notify();
-  }
+	if (m_extTerminationListener) {
+		m_extTerminationListener->onAnObjectEvent();
+	}
+	if (m_terminationEvent) {
+		m_terminationEvent->notify();
+	}
 }
 
 void RfbDispatcher::execute()
 {
-  try {
-    while (!isTerminating()) {
-      UINT32 code = m_gate->readUInt8();
-      if (code == 0xfc) { // special TightVNC code
-        code = code << 24;
-        code += m_gate->readUInt8() << 16;
-        code += m_gate->readUInt8() << 8;
-        code += m_gate->readUInt8();
-      }
-      std::map<UINT32, RfbDispatcherListener *>::iterator iter = m_handlers.find(code);
-      if (iter == m_handlers.end()) {
-        StringStorage errMess;
-        errMess.format(_T("unhandled %d code has been received from a client"),
-                       (int)code);
-        throw Exception(errMess.getString());
-      }
-      (*iter).second->onRequest(code, m_gate);
-    }
-  } catch (...) {
-  }
-  notifyAbTermination();
+	try {
+		while (!isTerminating()) {
+			UINT32 code = m_gate->readUInt8();
+			if (isSpecialCode(code)) {
+				code = getSpecialCode(code);
+			}
+
+			std::map<UINT32, RfbDispatcherListener *>::iterator iter = m_handlers.find(code);
+			if (iter == m_handlers.end()) {
+				StringStorage errMess;
+				errMess.format(_T("unhandled %d code has been received from a client"),
+					(int)code);
+				throw Exception(errMess.getString());
+			}
+			(*iter).second->onRequest(code, m_gate);
+		}
+	}
+	catch (...) {
+	}
+	notifyAbTermination();
+}
+
+BOOL RfbDispatcher::isSpecialCode(const UINT32 code) const {
+	return (code == SPECIAL_SPOON_CODE) || (code == SPECIAL_TIGHTVNC_CODE);
+}
+
+UINT32 RfbDispatcher::getSpecialCode(UINT32 base) {
+	base = base << 24;
+	base += m_gate->readUInt8() << 16;
+	base += m_gate->readUInt8() << 8;
+	base += m_gate->readUInt8();
+	return base;
 }
 
 void RfbDispatcher::registerNewHandle(UINT32 code, RfbDispatcherListener *listener)
 {
-  m_handlers[code] = listener;
+	m_handlers[code] = listener;
 }

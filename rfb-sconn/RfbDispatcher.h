@@ -46,6 +46,12 @@ public:
 protected:
   virtual void execute();
   void notifyAbTermination();
+  BOOL isSpecialCode(const UINT32 code) const;
+  UINT32 getSpecialCode(UINT32 base);
+
+
+  const UINT32 static SPECIAL_TIGHTVNC_CODE = 0xfc;
+  const UINT32 static SPECIAL_SPOON_CODE = 0xbb;
 
   RfbInputGate *m_gate;
 

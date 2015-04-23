@@ -25,6 +25,7 @@
 #include "RfbClient.h"
 #include "thread/AutoLock.h"
 #include "RfbCodeRegistrator.h"
+#include "p-server-lib/RemoteProcessRequestHandler.h"
 #include "ft-server-lib/FileTransferRequestHandler.h"
 #include "network/socket/SocketStream.h"
 #include "RfbInitializer.h"
@@ -179,6 +180,7 @@ void RfbClient::execute()
   RfbInputGate input(&sockStream);
 
   FileTransferRequestHandler *fileTransfer = 0;
+  RemoteProcessRequestHandler *remoteProcess = nullptr;
 
   RfbInitializer rfbInitializer(&sockStream, m_extAuthListener, this,
                                 !m_isOutgoing);
@@ -245,6 +247,9 @@ void RfbClient::execute()
       m_log->info(_T("File transfer is not allowed"));
     }
 
+	remoteProcess = new RemoteProcessRequestHandler(&codeRegtor, &output, m_log);
+	m_log->info(_T("Remote process has been created"));
+
     // Second initialization phase
     // Send and receive initialization information between server and viewer
     m_log->debug(_T("View port: (%d,%d) (%dx%d)"), viewPort.left,
@@ -277,6 +282,7 @@ void RfbClient::execute()
   notifyAbStateChanging(IN_PENDING_TO_REMOVE);
 
   if (fileTransfer)         delete fileTransfer;
+  if (remoteProcess)		delete remoteProcess;
   if (m_clipboardExchange)  delete m_clipboardExchange;
   if (m_clientInputHandler) delete m_clientInputHandler;
   if (m_updateSender)       delete m_updateSender;

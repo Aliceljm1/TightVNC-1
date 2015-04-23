@@ -26,7 +26,7 @@ RemoteProcessCore *RemoteProcessCapability::getCore()
 
 void RemoteProcessCapability::onServerMessage(UINT32 code, DataInputStream *input)
 {
-	// propagate message
+	m_msgProcessor.processRfbMessage(input, code);
 }
 
 void RemoteProcessCapability::addCapabilities(CapabilitiesManager *capabilities)

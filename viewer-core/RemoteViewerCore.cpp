@@ -905,9 +905,10 @@ UINT32 RemoteViewerCore::receiveServerMessageType()
   // must read next 3 bytes and create UINT32 message id for processing.
 
   static const UINT16 SERVER_MSG_SPECIAL_TIGHT_CODE = 0xFC;
+  static const UINT16 SERVER_MSG_SPECIAL_SPOON_CODE = 0xBB;
 
   UINT32 msgType = m_input->readUInt8();
-  if (msgType == SERVER_MSG_SPECIAL_TIGHT_CODE) {
+  if (msgType == SERVER_MSG_SPECIAL_SPOON_CODE || msgType == SERVER_MSG_SPECIAL_TIGHT_CODE) {
     for (int i = 0; i < 3; i++) {
       msgType <<= 8;
       msgType += m_input->readUInt8();
