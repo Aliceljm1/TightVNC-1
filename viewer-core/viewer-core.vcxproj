@@ -240,11 +240,11 @@
     <ClCompile Include="LastRectDecoder.cpp" />
     <ClCompile Include="PseudoDecoder.cpp" />
     <ClCompile Include="RawDecoder.cpp" />
+    <ClCompile Include="RemoteProcessCapability.cpp" />
     <ClCompile Include="RemoteViewerCore.cpp" />
     <ClCompile Include="RfbClientToServerMessage.cpp" />
     <ClCompile Include="RfbCutTextEventClientMessage.cpp" />
     <ClCompile Include="RfbFramebufferUpdateRequestClientMessage.cpp" />
-    <ClCompile Include="RfbGetProcessListClientMessage.cpp" />
     <ClCompile Include="RfbKeyEventClientMessage.cpp" />
     <ClCompile Include="RfbPointerEventClientMessage.cpp" />
     <ClCompile Include="RfbSetEncodingsClientMessage.cpp" />
@@ -278,11 +278,11 @@
     <ClInclude Include="LastRectDecoder.h" />
     <ClInclude Include="PseudoDecoder.h" />
     <ClInclude Include="RawDecoder.h" />
+    <ClInclude Include="RemoteProcessCapability.h" />
     <ClInclude Include="RemoteViewerCore.h" />
     <ClInclude Include="RfbClientToServerMessage.h" />
     <ClInclude Include="RfbCutTextEventClientMessage.h" />
     <ClInclude Include="RfbFramebufferUpdateRequestClientMessage.h" />
-    <ClInclude Include="RfbGetProcessListClientMessage.h" />
     <ClInclude Include="RfbKeyEventClientMessage.h" />
     <ClInclude Include="RfbPointerEventClientMessage.h" />
     <ClInclude Include="RfbSetEncodingsClientMessage.h" />

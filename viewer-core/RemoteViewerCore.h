@@ -302,8 +302,6 @@ public:
   //
   void refreshFrameBuffer();
 
-  void sendGetProcessListRequest();
-
   //
   // Send a keyboard event. Arguments specify the event as defined in the
   // RFB v.3 protocol specification.

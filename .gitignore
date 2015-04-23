@@ -3,3 +3,5 @@
 *.sdf
 *.log
 x64/*
+Win32/
+Debug/

@@ -30,6 +30,7 @@ class VendorDefs
 public:
   static const char *const STANDARD;
   static const char *const TIGHTVNC;
+  static const char *const SPOON;
 };
 
 #endif // __RFB_VENDOR_DEFS_H_INCLUDED__

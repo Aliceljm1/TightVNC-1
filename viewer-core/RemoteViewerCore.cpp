@@ -322,12 +322,6 @@ void RemoteViewerCore::sendFbUpdateRequest(bool incremental)
   m_logWriter.debug(_T("Frame buffer update request is sent"));
 }
 
-void RemoteViewerCore::sendGetProcessListRequest() {
-	RfbGetProcessListClientMessage msg;
-	msg.send(m_output);
-	m_logWriter.debug(_T("Get process list request is sent"));
-}
-
 void RemoteViewerCore::sendKeyboardEvent(bool downFlag, UINT32 key)
 {
   // If core isn't connected, then m_output may be isn't initialized.

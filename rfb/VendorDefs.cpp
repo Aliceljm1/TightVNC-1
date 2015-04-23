@@ -26,3 +26,4 @@
 
 const char *const VendorDefs::STANDARD = "STDV";
 const char *const VendorDefs::TIGHTVNC = "TGHT";
+const char *const VendorDefs::SPOON = "SPON";

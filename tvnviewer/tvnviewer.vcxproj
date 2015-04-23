@@ -396,6 +396,12 @@
     <ProjectReference Include="..\network\network.vcxproj">
       <Project>{9d22d911-02a4-4497-8c15-0ba34c6ca1fb}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\p-client-lib\p-client-lib.vcxproj">
+      <Project>{c59a09f6-b8d4-4f6b-b522-b07f52c668db}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\p-common\p-common.vcxproj">
+      <Project>{23cf4090-5746-4f7e-ab25-6558daee99c9}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\region\region.vcxproj">
       <Project>{14a47432-7ab8-4ca1-a36e-81117aabfd2c}</Project>
     </ProjectReference>

@@ -1,9 +1,7 @@
-#include "gui/BaseDialog.h"
-#include "viewer-core/RemoteViewerCore.h"
 #include "ProcessDialog.h"
-#include "resource.h"
 
-ProcessDialog::ProcessDialog(RemoteViewerCore& remoteViewer) : BaseDialog(IDD_PROCESS), m_remoteViewer(remoteViewer)
+ProcessDialog::ProcessDialog(RemoteProcessCore* core)
+	: BaseDialog(IDD_PROCESS), m_core(core)
 {
 }
 
@@ -25,5 +23,5 @@ BOOL ProcessDialog::onCommand(UINT controlID, UINT notificationID)
 }
 
 void ProcessDialog::onRefreshProcessList() {
-	m_remoteViewer.sendGetProcessListRequest();
+	m_core->remoteProcessListOperation();
 }
