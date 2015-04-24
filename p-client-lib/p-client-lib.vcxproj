@@ -137,6 +137,7 @@
     <ClInclude Include="RemoteProcessCore.h" />
     <ClInclude Include="RemoteProcessDetachOperation.h" />
     <ClInclude Include="RemoteProcessEventHandler.h" />
+    <ClInclude Include="RemoteProcessInterface.h" />
     <ClInclude Include="RemoteProcessListOperation.h" />
     <ClInclude Include="RemoteProcessMessageProcessor.h" />
     <ClInclude Include="RemoteProcessOperation.h" />
@@ -149,6 +150,7 @@
     <ClCompile Include="RemoteProcessCore.cpp" />
     <ClCompile Include="RemoteProcessDetachOperation.cpp" />
     <ClCompile Include="RemoteProcessEventHandler.cpp" />
+    <ClCompile Include="RemoteProcessInterface.cpp" />
     <ClCompile Include="RemoteProcessListOperation.cpp" />
     <ClCompile Include="RemoteProcessMessageProcessor.cpp" />
     <ClCompile Include="RemoteProcessOperation.cpp" />

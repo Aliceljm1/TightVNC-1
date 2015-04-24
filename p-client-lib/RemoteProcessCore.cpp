@@ -9,7 +9,7 @@ RemoteProcessCore::RemoteProcessCore(LogWriter *logWriter,
 	m_sender(sender),
 	m_replyBuffer(replyBuffer),
 	m_remoteProcessListeners(pListeners),
-	m_currentOperation(nullptr), m_state(State::Idle)
+	m_currentOperation(nullptr), m_state(RemoteProcessInterface::State::Idle)
 {
 }
 
@@ -20,12 +20,39 @@ RemoteProcessCore::~RemoteProcessCore()
 	}
 }
 
-void RemoteProcessCore::onStarted(RemoteProcessOperation *operation) {
-	// prograte information
+
+void RemoteProcessCore::setRemoteProcessInterface(RemoteProcessInterface *remoteProcess)
+{
+	m_remoteProcess = remoteProcess;
 }
 
+
+void RemoteProcessCore::onUpdateState(RemoteProcessInterface::State state, BOOL result)
+{
+	switch (state)
+	{
+	case RemoteProcessInterface::State::List:
+		if (result)
+		{
+			m_remoteProcess->setIdleState();
+		}
+
+		break;
+	default:
+		break;
+	}
+
+	m_state = RemoteProcessInterface::State::Idle;
+}
+
+
+void RemoteProcessCore::onStarted(RemoteProcessOperation *operation) {
+	m_remoteProcess->onOpStarted();
+}
+
+
 void RemoteProcessCore::onFinished(RemoteProcessOperation *operation) {
-	if (m_state == State::List) {
+	if (m_state == RemoteProcessInterface::State::List) {
 		auto *processListOperation = dynamic_cast<RemoteProcessListOperation *>(operation);
 
 		if (processListOperation->isOk()) {
@@ -35,23 +62,37 @@ void RemoteProcessCore::onFinished(RemoteProcessOperation *operation) {
 				m_remoteProcessInfo[i] = m_replyBuffer->getProcessInfo()[i];
 			}
 		}
+
+		m_remoteProcess->onOpFinished(m_state, processListOperation->isOk());
+		return;
 	}
 
-	// propagate information
+	m_remoteProcess->onOpFinished(m_state, TRUE);
 }
+
 
 void RemoteProcessCore::onError(RemoteProcessOperation *operation, const TCHAR *msg) {
 	// propagate information
 }
 
+
 void RemoteProcessCore::onInfo(RemoteProcessOperation *operation, const TCHAR *msg) {
 	//propagate information
 }
 
+
+BOOL RemoteProcessCore::isIdle()
+{
+	return m_state == RemoteProcessInterface::State::Idle;
+}
+
+
 void RemoteProcessCore::executeOperation(RemoteProcessOperation *newOperation)
 {
-	if (m_currentOperation != nullptr) {
+	if (m_currentOperation != nullptr)
+	{
 		m_currentOperation->removeListener(this);
+		m_remoteProcessListeners->removeListener(m_currentOperation);
 		delete m_currentOperation;
 	}
 
@@ -59,18 +100,21 @@ void RemoteProcessCore::executeOperation(RemoteProcessOperation *newOperation)
 	m_currentOperation->setRequestSender(m_sender);
 	m_currentOperation->setReplyBuffer(m_replyBuffer);
 	m_currentOperation->addListener(this);
+	m_remoteProcessListeners->addListener(m_currentOperation);
 
-	try {
+	try
+	{
 		m_currentOperation->start();
 	}
-	catch (IOException &ioEx) {
-		// propagate exception
+	catch (IOException &ioEx)
+	{
+		m_remoteProcess->raise(ioEx);
 	}
 }
 
 void RemoteProcessCore::remoteProcessListOperation()
 {
-	m_state = State::List;
+	m_state = RemoteProcessInterface::State::List;
 	executeOperation(new RemoteProcessListOperation(m_logWriter));
 }
 
@@ -79,6 +123,4 @@ vector<ProcessInfo> *RemoteProcessCore::getRemoteProcessList()
 	return &m_remoteProcessInfo;
 }
 
-void RemoteProcessCore::terminateCurrentOperation()
-{
-}
+void RemoteProcessCore::terminateCurrentOperation() { }

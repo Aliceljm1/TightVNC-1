@@ -12,7 +12,7 @@ public:
 
 	virtual void start() throw(IOException);
 
-	virtual void onFileListReply(DataInputStream *input);
+	virtual void onProcessListReply(DataInputStream *input);
 	virtual void onLastRequestFailedReply(DataInputStream *input);
 
 	BOOL isOk();

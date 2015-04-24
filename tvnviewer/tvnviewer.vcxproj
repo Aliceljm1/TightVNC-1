@@ -313,6 +313,7 @@
     <ClCompile Include="NewFolderDialog.cpp" />
     <ClCompile Include="OptionsDialog.cpp" />
     <ClCompile Include="ProcessDialog.cpp" />
+    <ClCompile Include="ProcessInfoListView.cpp" />
     <ClCompile Include="ResourceStrings.cpp" />
     <ClCompile Include="ScaleManager.cpp" />
     <ClCompile Include="TvnViewer.cpp" />
@@ -344,6 +345,7 @@
     <ClInclude Include="NewFolderDialog.h" />
     <ClInclude Include="OptionsDialog.h" />
     <ClInclude Include="ProcessDialog.h" />
+    <ClInclude Include="ProcessInfoListView.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ResourceStrings.h" />
     <ClInclude Include="ScaleManager.h" />

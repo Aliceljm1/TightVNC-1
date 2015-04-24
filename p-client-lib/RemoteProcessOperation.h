@@ -9,11 +9,17 @@
 class RemoteProcessOperationEventListener;
 
 class RemoteProcessOperation : 
+	public RemoteProcessEventHandler,
 	public ListenerContainer <RemoteProcessOperationEventListener *>
 {
 public:
 	RemoteProcessOperation(LogWriter *logWriter);
 	~RemoteProcessOperation();
+
+	virtual void onProcessListReply(DataInputStream *input);
+	virtual void onProcessAttachReply(DataInputStream *input);
+	virtual void onProcessDetachReply(DataInputStream *input);
+	virtual void onLastRequestFailedReply(DataInputStream *input);
 
 	virtual void start() throw(IOException) = 0;
 	void setRequestSender(RemoteProcessRequestSender *requestSender);

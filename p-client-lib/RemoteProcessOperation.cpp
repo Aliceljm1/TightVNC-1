@@ -62,3 +62,26 @@ void RemoteProcessOperation::notifyInfo(const TCHAR *message)
 		listener->onInfo(this, message);
 	}
 }
+
+void onOperationNotSupported()
+{
+	throw Exception(_T("Current message is not permitted by remote process operation"));
+}
+
+void RemoteProcessOperation::onProcessListReply(DataInputStream *input) {
+	onOperationNotSupported();
+}
+
+void RemoteProcessOperation::onProcessAttachReply(DataInputStream *input)
+{
+	onOperationNotSupported();
+}
+void RemoteProcessOperation::onProcessDetachReply(DataInputStream *input)
+{
+	onOperationNotSupported();
+}
+
+void RemoteProcessOperation::onLastRequestFailedReply(DataInputStream *input)
+{
+	onOperationNotSupported();
+}

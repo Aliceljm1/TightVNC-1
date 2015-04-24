@@ -11,7 +11,7 @@ void RemoteProcessListOperation::start() {
 	this->notifyStart();
 }
 
-void RemoteProcessListOperation::onFileListReply(DataInputStream *input)
+void RemoteProcessListOperation::onProcessListReply(DataInputStream *input)
 {
 	m_isFinished = true;
 	m_isOk = true;

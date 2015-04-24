@@ -9,6 +9,7 @@
 #include "RemoteProcessOperation.h"
 #include "RemoteProcessOperationEventListener.h"
 #include "RemoteProcessEventHandler.h"
+#include "RemoteProcessInterface.h"
 #include "RemoteProcessListOperation.h"
 
 using std::vector;
@@ -25,6 +26,11 @@ public:
 	vector <ProcessInfo> *getRemoteProcessList();
 	void remoteProcessListOperation();
 	void terminateCurrentOperation();
+	
+	BOOL isIdle();
+
+	void setRemoteProcessInterface(RemoteProcessInterface *remoteProcess);
+	virtual void onUpdateState(RemoteProcessInterface::State state, BOOL result);
 
 protected:
 	virtual void onStarted(RemoteProcessOperation *operation);
@@ -40,14 +46,8 @@ private:
 	RemoteProcessReplyBuffer *m_replyBuffer;
 	ListenerContainer<RemoteProcessEventHandler *> *m_remoteProcessListeners;
 
-	enum class State {
-		Idle,
-		List,
-		Attach,
-		Detach
-	};
-
-	State m_state;
+	RemoteProcessInterface::State m_state;
+	RemoteProcessInterface *m_remoteProcess;
 	RemoteProcessOperation *m_currentOperation;
 	vector<ProcessInfo> m_remoteProcessInfo;
 };

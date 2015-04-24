@@ -369,14 +369,20 @@ void ViewerWindow::dialogConnectionOptions()
 
 void ViewerWindow::dialogProcessInfo()
 {
-	ProcessDialog dialog(m_remoteProcess->getCore());
+	auto core = m_remoteProcess->getCore();
+
+	ProcessDialog dialog(core);
 
 	Control control = getHWnd();
 	dialog.setParent(&control);
 
+	core->setRemoteProcessInterface(&dialog);
+
 	if (dialog.showModal() == IDOK) {
 		applySettings();
 	}
+
+	core->setRemoteProcessInterface(nullptr);
 }
 
 void ViewerWindow::dialogConnectionInfo()
