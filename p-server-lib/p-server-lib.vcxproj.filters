@@ -18,9 +18,15 @@
     <ClInclude Include="RemoteProcessRequestHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ProcessList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RemoteProcessRequestHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ProcessList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

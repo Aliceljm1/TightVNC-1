@@ -134,9 +134,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ProcessList.h" />
     <ClInclude Include="RemoteProcessRequestHandler.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ProcessList.cpp" />
     <ClCompile Include="RemoteProcessRequestHandler.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

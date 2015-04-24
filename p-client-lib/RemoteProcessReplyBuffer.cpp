@@ -49,6 +49,9 @@ void RemoteProcessReplyBuffer::onProcessListReply(DataInputStream *input)
 	for (auto i = 0; i < m_processInfoCount; ++i) {
 		ProcessInfo *processInfo = &m_processInfo[i];
 
+		auto pid = input->readInt32();
+		processInfo->setProcessPid(pid);
+
 		StringStorage t;
 		input->readUTF8(&t);
 

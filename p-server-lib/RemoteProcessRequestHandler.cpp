@@ -1,6 +1,8 @@
 #include "RemoteProcessRequestHandler.h"
 
 
+BOOL CALLBACK EnumWindowsProc(HWND hwnd, LPARAM lparam);
+
 RemoteProcessRequestHandler::RemoteProcessRequestHandler(RfbCodeRegistrator *registrator,
 	RfbOutputGate *output,
 	LogWriter *log)
@@ -37,11 +39,20 @@ void RemoteProcessRequestHandler::onRequest(UINT32 reqCode, RfbInputGate *backGa
 void RemoteProcessRequestHandler::processListRequested(RfbInputGate *backGate) {
 	m_log->message(_T("Process list requested"));
 
+	ProcessList processList;
+	auto processes = processList.getProcesses();
+
 	{
 		AutoLock l(m_output);
 
 		m_output->writeUInt32(PMessage::PROCESS_LIST_REPLY);
-		m_output->writeUInt32(0);
+		m_output->writeUInt32(processes->size());
+
+		for (auto p : *processes)
+		{
+			m_output->writeInt32(p.getProcessPid());
+			m_output->writeUTF8(p.getProcessName());
+		}
 
 		m_output->flush();
 	}
@@ -58,3 +69,5 @@ void RemoteProcessRequestHandler::lastRequestFailed(RfbInputGate *backGate, cons
 		m_output->flush();
 	}
 }
+
+

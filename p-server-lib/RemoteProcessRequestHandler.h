@@ -9,6 +9,7 @@
 #include "rfb-sconn/RfbDispatcherListener.h"
 #include "log-writer/LogWriter.h"
 #include "p-common/PMessage.h"
+#include "ProcessList.h"
 
 class RemoteProcessRequestHandler : public RfbDispatcherListener
 {
