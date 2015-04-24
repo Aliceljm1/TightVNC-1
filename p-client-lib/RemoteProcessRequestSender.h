@@ -15,8 +15,8 @@ public:
 	void setOutput(RfbOutputGate *output);
 
 	void sendListRemoteProcessRequest() throw(IOException);
-	void sendAttachRemoteProcessRequest(const TCHAR *processName) throw(IOException);
-	void sendDetachRemoteProcessRequest(const TCHAR *processName) throw(IOException);
+	void sendAttachRemoteProcessRequest(const DWORD pid) throw(IOException);
+	void sendDetachRemoteProcessRequest() throw(IOException);
 private:
 	RfbOutputGate *m_output;
 	LogWriter *m_logWriter;

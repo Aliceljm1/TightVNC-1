@@ -5,6 +5,10 @@ ProcessDialog::ProcessDialog(RemoteProcessCore* core)
 {
 }
 
+
+ProcessDialog::~ProcessDialog() { }
+
+
 BOOL ProcessDialog::onCommand(UINT controlID, UINT notificationID)
 {
 	switch (controlID) {
@@ -47,7 +51,7 @@ void ProcessDialog::onOpFinished(State state, BOOL result)
 		return;
 	}
 
-	enableControls(true);
+	enableControls(TRUE);
 	m_core->onUpdateState(state, result);
 }
 
@@ -98,7 +102,16 @@ void ProcessDialog::onCancelButtonClick()
 
 void ProcessDialog::onOkButtonClick()
 {
-	kill(IDOK);
+	m_isClosing = TRUE;
+
+	auto selectedProcess = m_processListView.getSelectedProcessInfo();
+	if (selectedProcess == nullptr)
+	{
+		onDetachProcess();
+		return;
+	}
+
+	onAttachProcess(selectedProcess->getProcessPid());
 }
 
 
@@ -115,7 +128,7 @@ BOOL ProcessDialog::tryClose()
 		MB_YESNO | MB_ICONQUESTION);
 
 	if (response != IDYES) {
-		m_isClosing = true;
+		m_isClosing = TRUE;
 		m_core->terminateCurrentOperation();
 		return TRUE;
 	}
@@ -141,4 +154,14 @@ void ProcessDialog::refreshProcessList()
 void ProcessDialog::onRefreshProcessList()
 {
 	refreshProcessList();
+}
+
+void ProcessDialog::onDetachProcess()
+{
+	m_core->remoteProcessDetachOperation();
+}
+
+void ProcessDialog::onAttachProcess(DWORD pid)
+{
+	m_core->remoteProcessAttachOperation(pid);
 }

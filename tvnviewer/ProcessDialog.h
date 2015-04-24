@@ -10,10 +10,13 @@ class ProcessDialog : public BaseDialog, public RemoteProcessInterface
 {
 public:
 	ProcessDialog(RemoteProcessCore *core);
+	~ProcessDialog();
 
 	// RemoteProcessInterface
 	void setIdleState();
 	void onRefreshProcessList();
+	void onAttachProcess(DWORD pid);
+	void onDetachProcess();
 	void onOpStarted();
 	void onOpFinished(State state, BOOL result);
 	void raise(Exception &ex);

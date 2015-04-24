@@ -22,6 +22,8 @@ public:
 
 private:
 	void processListRequested(RfbInputGate *backGate);
+	void processAttachRequested(RfbInputGate *backGate);
+	void processDetachRequested(RfbInputGate *backGate);
 	void lastRequestFailed(RfbInputGate *backGate, const TCHAR* msg);
 
 	RfbCodeRegistrator *m_registrator;

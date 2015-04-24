@@ -11,6 +11,8 @@
 #include "RemoteProcessEventHandler.h"
 #include "RemoteProcessInterface.h"
 #include "RemoteProcessListOperation.h"
+#include "RemoteProcessAttachOperation.h"
+#include "RemoteProcessDetachOperation.h"
 
 using std::vector;
 
@@ -25,6 +27,8 @@ public:
 
 	vector <ProcessInfo> *getRemoteProcessList();
 	void remoteProcessListOperation();
+	void remoteProcessAttachOperation(DWORD pid);
+	void remoteProcessDetachOperation();
 	void terminateCurrentOperation();
 	
 	BOOL isIdle();

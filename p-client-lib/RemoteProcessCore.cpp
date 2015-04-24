@@ -41,8 +41,6 @@ void RemoteProcessCore::onUpdateState(RemoteProcessInterface::State state, BOOL 
 	default:
 		break;
 	}
-
-	m_state = RemoteProcessInterface::State::Idle;
 }
 
 
@@ -52,6 +50,7 @@ void RemoteProcessCore::onStarted(RemoteProcessOperation *operation) {
 
 
 void RemoteProcessCore::onFinished(RemoteProcessOperation *operation) {
+
 	if (m_state == RemoteProcessInterface::State::List) {
 		auto *processListOperation = dynamic_cast<RemoteProcessListOperation *>(operation);
 
@@ -64,10 +63,12 @@ void RemoteProcessCore::onFinished(RemoteProcessOperation *operation) {
 		}
 
 		m_remoteProcess->onOpFinished(m_state, processListOperation->isOk());
+		m_state = RemoteProcessInterface::State::Idle;
 		return;
 	}
 
 	m_remoteProcess->onOpFinished(m_state, TRUE);
+	m_state = RemoteProcessInterface::State::Idle;
 }
 
 
@@ -118,9 +119,27 @@ void RemoteProcessCore::remoteProcessListOperation()
 	executeOperation(new RemoteProcessListOperation(m_logWriter));
 }
 
+
+void RemoteProcessCore::remoteProcessDetachOperation()
+{
+	m_state = RemoteProcessInterface::State::Detach;
+	executeOperation(new RemoteProcessDetachOperation(m_logWriter));
+}
+
+
+void RemoteProcessCore::remoteProcessAttachOperation(const DWORD pid)
+{
+	m_state = RemoteProcessInterface::State::Attach;
+	executeOperation(new RemoteProcessAttachOperation(m_logWriter, pid));
+}
+
+
 vector<ProcessInfo> *RemoteProcessCore::getRemoteProcessList()
 {
 	return &m_remoteProcessInfo;
 }
 
-void RemoteProcessCore::terminateCurrentOperation() { }
+void RemoteProcessCore::terminateCurrentOperation()
+{
+	m_state == RemoteProcessInterface::State::Idle;
+}
