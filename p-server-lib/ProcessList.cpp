@@ -14,6 +14,10 @@ ProcessList::~ProcessList()
 
 BOOL CALLBACK EnumWindowsProc(HWND hwnd, LPARAM lParam)
 {
+	if (!IsWindowVisible(hwnd)) {
+		return TRUE;
+	}
+
 	const int MAX__PROCESS_NAME_LENGHT = 80;
 	TCHAR processName[MAX__PROCESS_NAME_LENGHT];
 

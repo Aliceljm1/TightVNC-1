@@ -42,6 +42,7 @@ private:
 	Control m_cancelButton;
 	ProcessInfoListView m_processListView;
 
+	LocalMutex m_locker;
 	RemoteProcessCore *m_core;
 };
 

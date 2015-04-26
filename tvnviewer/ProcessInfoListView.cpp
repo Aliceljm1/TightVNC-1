@@ -14,8 +14,8 @@ void ProcessInfoListView::setWindow(HWND hwnd)
 {
 	ListView::setWindow(hwnd);
 
-	ListView::addColumn(0, _T("Name"), 200);
-	ListView::addColumn(1, _T("PID"), 80, LVCFMT_RIGHT);
+	ListView::addColumn(0, _T("PID"), 80, LVCFMT_RIGHT);
+	ListView::addColumn(1, _T("Name"), 200);
 
 	ListView::setFullRowSelectStyle(true);
 }
@@ -23,13 +23,12 @@ void ProcessInfoListView::setWindow(HWND hwnd)
 
 void ProcessInfoListView::addItem(int index, ProcessInfo *processInfo)
 {
-	const TCHAR *processName = processInfo->getProcessName();
-
-	ListView::addItem(index, processName, (LPARAM) processInfo);
-
 	StringStorage pidString;
 	pidString.format(_T("%d"), processInfo->getProcessPid());
-	ListView::setSubItemText(index, 1, pidString.getString());
+	const TCHAR *processName = processInfo->getProcessName();
+
+	ListView::addItem(index, pidString.getString(), (LPARAM)processInfo);
+	ListView::setSubItemText(index, 1, processName);
 
 	ListView::sort();
 }
@@ -84,14 +83,14 @@ int ProcessInfoListView::compareItem(LPARAM lParam1, LPARAM lParam2, LPARAM lPar
 	switch (sortColumn)
 	{
 	case 0:
-		return _tcsicmp(firstItem->getProcessName(), secondItem->getProcessName());
-	case 1:
 		compare = firstItem->getProcessPid() - secondItem->getProcessPid();
 		if (compare != 0)
 		{
 			return compare;
 		}
 		return compareItem(lParam1, lParam2, 1);
+	case 1:
+		return _tcsicmp(firstItem->getProcessName(), secondItem->getProcessName());
 	default:
 		_ASSERT(false);
 		return 0;

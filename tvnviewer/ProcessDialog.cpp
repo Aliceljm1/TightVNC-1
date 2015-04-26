@@ -62,6 +62,7 @@ BOOL ProcessDialog::onInitDialog()
 
 	initControls();
 	enableControls(TRUE);
+	setIdleState();
 
 	return TRUE;
 }
@@ -139,6 +140,8 @@ BOOL ProcessDialog::tryClose()
 
 void ProcessDialog::setIdleState()
 {
+	AutoLock l(&m_locker);
+
 	m_processListView.clear();
 	auto processList = m_core->getRemoteProcessList();
 	ProcessInfo *processInfo = &processList->front();

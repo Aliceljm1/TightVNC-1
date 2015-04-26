@@ -377,6 +377,8 @@ void ViewerWindow::dialogProcessInfo()
 	dialog.setParent(&control);
 
 	core->setRemoteProcessInterface(&dialog);
+	
+	dialog.onRefreshProcessList();
 
 	if (dialog.showModal() == IDOK) {
 		applySettings();
