@@ -5,8 +5,10 @@ BOOL CALLBACK EnumWindowsProc(HWND hwnd, LPARAM lparam);
 
 RemoteProcessRequestHandler::RemoteProcessRequestHandler(RfbCodeRegistrator *registrator,
 	RfbOutputGate *output,
+	Desktop *desktop,
+	RfbClient *client,
 	LogWriter *log)
-	: m_log(log), m_output(output), m_registrator(registrator)
+	: m_log(log), m_output(output), m_registrator(registrator), m_client(client), m_desktop(desktop)
 {
 	registrator->addClToSrvCap(PMessage::PROCESS_LIST_REQUEST, VendorDefs::SPOON, PMessage::PROCESS_LIST_REQUEST_SIG);
 	registrator->addClToSrvCap(PMessage::PROCESS_ATTACH_REQEST, VendorDefs::SPOON, PMessage::PROCESS_ATTACH_REQUEST_SIG);
@@ -78,6 +80,10 @@ void RemoteProcessRequestHandler::processAttachRequested(RfbInputGate *gate)
 
 	DWORD pid = gate->readUInt32();
 
+	ViewPortState viewportState;
+	viewportState.setProcessId(pid);
+	changeViewPort(&viewportState);
+
 	{
 		AutoLock l(m_output);
 
@@ -91,11 +97,24 @@ void RemoteProcessRequestHandler::processDetachRequested(RfbInputGate *gate)
 {
 	m_log->message(_T("Process detach requested"));
 
+	ViewPortState viewportState;
+	viewportState.setFullDesktop();
+	changeViewPort(&viewportState);
+
 	{
 		AutoLock l(m_output);
 
 		m_output->writeUInt32(PMessage::PROCESS_DETACH_REPLY);
 		m_output->flush();
+	}
+}
+
+void RemoteProcessRequestHandler::changeViewPort(ViewPortState *viewPortState)
+{
+	auto l_client = m_client;
+	if (l_client != nullptr)
+	{
+		l_client->changeDynViewPort(viewPortState);
 	}
 }
 

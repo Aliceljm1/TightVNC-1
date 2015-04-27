@@ -322,6 +322,54 @@ void RemoteViewerCore::sendFbUpdateRequest(bool incremental)
   m_logWriter.debug(_T("Frame buffer update request is sent"));
 }
 
+
+void RemoteViewerCore::refreshFullScreen()
+{
+	//{
+	//	AutoLock al(&m_requestUpdateLock);
+	//	bool requestUpdate = m_isNeedRequestUpdate;
+	//	m_isNeedRequestUpdate = false;
+	//}
+
+	//bool isRefresh = false;
+	//bool isUpdateFbProperties = false;
+	//if (updatePixelFormat()) {
+	//	isUpdateFbProperties = true;
+	//}
+
+ // {
+	//  AutoLock al(&m_refreshingLock);
+	//  if (m_isRefreshing) {
+	//	  m_isRefreshing = false;
+	//	  isRefresh = true;
+	//  }
+ // }
+
+ // bool isIncremental = FALSE && !isRefresh && !isUpdateFbProperties;
+ // Rect updateRect;
+ // {
+	//  AutoLock al(&m_fbLock);
+	//  updateRect = m_frameBuffer.getDimension().getRect();
+ // }
+
+ // if (isIncremental) {
+	//  m_logWriter.debug(_T("Sending frame buffer incremental update request [%dx%d]..."),
+	//	  updateRect.getWidth(), updateRect.getHeight());
+ // }
+ // else {
+	//  m_logWriter.debug(_T("Sending frame buffer full update request [%dx%d]..."),
+	//	  updateRect.getWidth(), updateRect.getHeight());
+ // }
+
+ // RfbFramebufferUpdateRequestClientMessage fbUpdReq(isIncremental, updateRect);
+ // fbUpdReq.send(m_output);
+ // m_logWriter.debug(_T("Frame buffer update request is sent"));
+
+  refreshFrameBuffer();
+  m_fbUpdateNotifier.onPropertiesFb();
+}
+
+
 void RemoteViewerCore::sendKeyboardEvent(bool downFlag, UINT32 key)
 {
   // If core isn't connected, then m_output may be isn't initialized.

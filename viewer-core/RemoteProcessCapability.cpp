@@ -1,11 +1,11 @@
 #include "RemoteProcessCapability.h"
 
 
-RemoteProcessCapability::RemoteProcessCapability(Logger *logger)
+RemoteProcessCapability::RemoteProcessCapability(Logger *logger, RemoteViewerCore *remoteViewer)
 	: m_logWriter(logger),
 	m_replyBuffer(&m_logWriter),
 	m_sender(&m_logWriter),
-	m_pCore(&m_logWriter, &m_sender, &m_replyBuffer, &m_msgProcessor)
+	m_pCore(&m_logWriter, &m_sender, &m_replyBuffer, remoteViewer, &m_msgProcessor)
 {
 	m_msgProcessor.addListener(&m_replyBuffer);
 }

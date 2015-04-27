@@ -1,7 +1,7 @@
 #include "ProcessDialog.h"
 
-ProcessDialog::ProcessDialog(RemoteProcessCore* core)
-	: BaseDialog(IDD_PROCESS), m_core(core)
+ProcessDialog::ProcessDialog(RemoteProcessCore *processCore)
+	: BaseDialog(IDD_PROCESS), m_processCore(processCore)
 {
 }
 
@@ -52,7 +52,7 @@ void ProcessDialog::onOpFinished(State state, BOOL result)
 	}
 
 	enableControls(TRUE);
-	m_core->onUpdateState(state, result);
+	m_processCore->onUpdateState(state, result);
 }
 
 
@@ -95,9 +95,16 @@ void ProcessDialog::onRefreshButtonClick()
 
 void ProcessDialog::onCancelButtonClick()
 {
-	tryClose();
-
-	m_cancelButton.setEnabled(false);
+	if (tryClose())
+	{
+		m_processCore->setRemoteProcessInterface(nullptr);
+		onDetachProcess();
+	}
+	else
+	{
+		m_cancelButton.setEnabled(false);
+	}
+	
 }
 
 
@@ -118,7 +125,7 @@ void ProcessDialog::onOkButtonClick()
 
 BOOL ProcessDialog::tryClose()
 {
-	if (m_core->isIdle()) {
+	if (m_processCore->isIdle()) {
 		kill(IDCANCEL);
 		return TRUE;
 	}
@@ -130,7 +137,7 @@ BOOL ProcessDialog::tryClose()
 
 	if (response != IDYES) {
 		m_isClosing = TRUE;
-		m_core->terminateCurrentOperation();
+		m_processCore->terminateCurrentOperation();
 		return TRUE;
 	}
 
@@ -143,7 +150,7 @@ void ProcessDialog::setIdleState()
 	AutoLock l(&m_locker);
 
 	m_processListView.clear();
-	auto processList = m_core->getRemoteProcessList();
+	auto processList = m_processCore->getRemoteProcessList();
 	ProcessInfo *processInfo = &processList->front();
 	m_processListView.addRange(&processInfo, processList->size());
 }
@@ -151,7 +158,7 @@ void ProcessDialog::setIdleState()
 
 void ProcessDialog::refreshProcessList()
 {
-	m_core->remoteProcessListOperation();
+	m_processCore->remoteProcessListOperation();
 }
 
 void ProcessDialog::onRefreshProcessList()
@@ -161,10 +168,10 @@ void ProcessDialog::onRefreshProcessList()
 
 void ProcessDialog::onDetachProcess()
 {
-	m_core->remoteProcessDetachOperation();
+	m_processCore->remoteProcessDetachOperation();
 }
 
 void ProcessDialog::onAttachProcess(DWORD pid)
 {
-	m_core->remoteProcessAttachOperation(pid);
+	m_processCore->remoteProcessAttachOperation(pid);
 }

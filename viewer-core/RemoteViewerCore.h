@@ -399,6 +399,8 @@ public:
   virtual void getEnabledServerMsgCapabilities(vector<UINT32> *codes) const;
   virtual void getEnabledEncodingCapabilities(vector<UINT32> *codes) const;
 
+
+  void RemoteViewerCore::refreshFullScreen();
 private:
   //
   // Overrides Thread::execute(). Implements the input thread.
@@ -454,12 +456,6 @@ private:
   void processPseudoEncoding(const Rect *rect, int encType);
 
   //
-  // Send FramebufferUpdateRequest client message (code 3).
-  // This method updates pixel format if needed.
-  //
-  void sendFbUpdateRequest(bool incremental = true);
-
-  //
   // Receive Bell server message (code 2) and send event to the adapter.
   //
   void receiveBell();
@@ -504,6 +500,12 @@ private:
   //
   void setFbProperties(const Dimension *fbDimension,
                        const PixelFormat *fbPixelFormat);
+
+  //
+  // Send FramebufferUpdateRequest client message (code 3).
+  // This method updates pixel format if needed.
+  //
+  void sendFbUpdateRequest(bool incremental = true);
 
   //
   // If m_isNewPixelFormat flag is set to true, then pixel format of the frame buffer

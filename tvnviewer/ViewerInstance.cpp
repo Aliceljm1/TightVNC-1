@@ -38,7 +38,8 @@ ViewerInstance::ViewerInstance(WindowsApplication *application,
 	&m_conConf,
 	ViewerConfig::getInstance()->getLogger()),
 	m_vncAuthHandler(&m_condata),
-	m_viewerCore(ViewerConfig::getInstance()->getLogger())
+	m_viewerCore(ViewerConfig::getInstance()->getLogger()),
+	m_remoteProcess(0, &m_viewerCore)
 {
 }
 
@@ -54,7 +55,8 @@ ViewerInstance::ViewerInstance(WindowsApplication *application,
 	&m_conConf,
 	ViewerConfig::getInstance()->getLogger()),
 	m_vncAuthHandler(&m_condata),
-	m_viewerCore(ViewerConfig::getInstance()->getLogger())
+	m_viewerCore(ViewerConfig::getInstance()->getLogger()),
+	m_remoteProcess(0, &m_viewerCore)
 {
 }
 

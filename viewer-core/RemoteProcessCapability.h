@@ -7,13 +7,14 @@
 
 #include "rfb\VendorDefs.h"
 
+#include "RemoteViewerCore.h"
 #include "ServerMessageListener.h"
 #include "CapabilitiesManager.h"
 
 class RemoteProcessCapability : public ServerMessageListener
 {
 public:
-	RemoteProcessCapability(Logger *logger = 0);
+	RemoteProcessCapability(Logger *logger, RemoteViewerCore *remoteViewer);
 	~RemoteProcessCapability();
 
 	void addCapabilities(CapabilitiesManager *capabilities);

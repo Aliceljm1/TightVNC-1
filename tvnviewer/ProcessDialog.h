@@ -9,7 +9,7 @@
 class ProcessDialog : public BaseDialog, public RemoteProcessInterface
 {
 public:
-	ProcessDialog(RemoteProcessCore *core);
+	ProcessDialog(RemoteProcessCore *processCode);
 	~ProcessDialog();
 
 	// RemoteProcessInterface
@@ -43,6 +43,6 @@ private:
 	ProcessInfoListView m_processListView;
 
 	LocalMutex m_locker;
-	RemoteProcessCore *m_core;
+	RemoteProcessCore *m_processCore;
 };
 
