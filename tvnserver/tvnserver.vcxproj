@@ -82,7 +82,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v110</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -195,6 +195,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX64</TargetMachine>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
     </Link>
     <Manifest>
       <AdditionalManifestFiles>DPIAware.manifest;%(AdditionalManifestFiles)</AdditionalManifestFiles>
@@ -473,7 +475,6 @@
     </ProjectReference>
     <ProjectReference Include="..\rfb-sconn\rfb-sconn.vcxproj">
       <Project>{5ea5d675-a827-4cc5-8b2a-5639119e3185}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="..\rfb\rfb.vcxproj">
       <Project>{cea92b3a-5467-4cc7-80a6-227891f96c05}</Project>
